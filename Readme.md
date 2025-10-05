@@ -16,31 +16,31 @@
 
 Screenshots
 
-## Login
+### Login
 
 <img src="./screenshots/login.png" alt="drawing" width="300"/>
 
-## List Accounts
+### List Accounts
 
 <img src="./screenshots/accounts.png" alt="drawing" width="300"/>
 
 
-## List Transactions
+### List Transactions
 
 <img src="./screenshots/transactions.png" alt="drawing" width="300"/>
 
-## Filter By Date
+### Filter By Date
 
 <img src="./screenshots/filter_by_date.png" alt="drawing" width="300"/>
 
-## Filter By Amount
+### Filter By Amount
 
 <img src="./screenshots/filter_by_amount.png" alt="drawing" width="300"/>
 
-## Filter By Keyword
+### Filter By Keyword
 
 <img src="./screenshots/filter_by_keyword.png" alt="drawing" width="300"/>
 
-## Transfer Funds
+### Transfer Funds
 
 <img src="./screenshots/transfer.png" alt="drawing" width="300"/>
