@@ -16,6 +16,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TransferActivity extends AppCompatActivity {
 
@@ -57,12 +59,19 @@ public class TransferActivity extends AppCompatActivity {
                         String amount = amountEditText.getText().toString();
 
                         JsonNode data = null;
-                        String postData = "{\n    \"from_account_number\": \"" + fromAccountNumber + "\",\n    \"to_account_number\": \"" + toAccountNumber + "\",\n    \"amount\": \"" + amount + "\"\n}";
 
                         try {
 
                             APIClient client = new APIClient(getApplicationContext());
-                            data = client.executePostRequest("/transfer", postData);
+
+                            Map<String, Object> transferInfo = new HashMap<>();
+                            transferInfo.put("from_account_number", fromAccountNumber);
+                            transferInfo.put("to_account_number", toAccountNumber);
+                            transferInfo.put("amount", amount);
+
+                            String transferPostData = client.convertMapToJson(transferInfo);
+
+                            data = client.executePostRequest("/transfer", transferPostData);
                         } catch (JsonProcessingException e) {
                             throw new RuntimeException(e);
                         }

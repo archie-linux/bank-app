@@ -14,11 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TransactionActivity extends AppCompatActivity {
 
@@ -56,7 +55,8 @@ public class TransactionActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-        List<TransactionModel> transactions = updateTransactionModel(data);
+        List<TransactionModel> transactions = null;
+        transactions = updateTransactionModel(data);
 
         ArrayAdapter adapter = new TransactionAdaptor(this, transactions);
 
@@ -75,21 +75,29 @@ public class TransactionActivity extends AppCompatActivity {
                 String maxAmount = maxAmountEditText.getText().toString();
 
                 APIClient client = new APIClient(getApplicationContext());
+
                 JsonNode data = null;
                 try {
+
+                    Map<String, String> filterParams = new HashMap<>();
+                    filterParams.put("min_amount", minAmount);
+                    filterParams.put("max_amount", maxAmount);
+                    filterParams.put("min_date", fromDate);
+                    filterParams.put("max_date", toDate);
+                    filterParams.put("keyword", keyword);
+
+                    String filterParamsQueryString = client.buildQueryParams(filterParams);
+
                     data = client.executeGetRequest(
-                            "/account/" + accountId
-                                    + "/transactions?"
-                                    + "keyword=" + keyword
-                                    + "&min_date=" + fromDate
-                                    + "&max_date=" + toDate
-                                    + "&min_amount=" + minAmount
-                                    + "&max_amount=" + maxAmount);
+                            "/account/" + accountId + "/transactions?"
+                                        + filterParamsQueryString
+                                    );
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException(e);
                 }
 
-                List<TransactionModel> filteredTransactions =  updateTransactionModel(data);
+                List<TransactionModel> filteredTransactions = null;
+                filteredTransactions = updateTransactionModel(data);
                 updateAdapterWithFilteredTransactions(adapter, filteredTransactions);
             }
         });
@@ -103,20 +111,9 @@ public class TransactionActivity extends AppCompatActivity {
             String transactionDesc = dataNode.get("desc").asText();
             String timestamp = dataNode.get("timestamp").asText();
 
-            SimpleDateFormat inputDateTimeFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
-            Date parsedDateTime = null;
-            try {
-                parsedDateTime = inputDateTimeFormat.parse(timestamp);
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
+            String[] parts = timestamp.split(" ");
 
-            int day = parsedDateTime.getDate();
-            int month = parsedDateTime.getMonth() + 1;
-            int year = parsedDateTime.getYear() + 1900;
-
-            String formattedTimestamp = null;
-            formattedTimestamp = year + "/" + month + "/" + day;
+            String formattedDate = parts[1] + "-" + parts[2] + "-" + parts[3];
 
             String amount = "$" + dataNode.get("amount").asText();
             String currentBalance = dataNode.get("current_balance").asText();
@@ -124,7 +121,7 @@ public class TransactionActivity extends AppCompatActivity {
             transactions.add(new TransactionModel(
                     transactionType,
                     transactionDesc,
-                    formattedTimestamp.toString(),
+                    formattedDate,
                     amount,
                     currentBalance
             ));

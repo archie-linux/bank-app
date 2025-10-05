@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -42,10 +45,19 @@ public class LoginActivity extends AppCompatActivity {
                         String password = editPasswordText.getText().toString();
 
                         APIClient client = new APIClient(getApplicationContext());
-                        String postData = "{\n    \"username\": \"" + username + "\",\n    \"password\": \"" + password + "\"\n}";
+
+                        Map<String, Object> loginInfo = new HashMap<>();
+                        loginInfo.put("username", username);
+                        loginInfo.put("password", password);
+
+                        String loginPostData = client.convertMapToJson(loginInfo);
+
+                        // Print the JSON string
+                        System.out.println("JSON String: " + loginPostData);
+
                         JsonNode data = null;
                         try {
-                            data = client.executePostRequest("/login", postData);
+                            data = client.executePostRequest("/login", loginPostData);
                         } catch (JsonProcessingException e) {
                             throw new RuntimeException(e);
                         }

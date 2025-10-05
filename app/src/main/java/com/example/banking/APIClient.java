@@ -5,17 +5,20 @@ import android.content.Context;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.Map;
 
-import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
 
 public class APIClient {
 
@@ -75,7 +78,6 @@ public class APIClient {
             urlConnection.getOutputStream().write(postData.getBytes());
 
             InputStream APIResponse = urlConnection.getInputStream();
-            System.out.println(APIResponse);
             result = readInputStream(APIResponse);
 
 
@@ -90,6 +92,34 @@ public class APIClient {
         }
 
         return getAPIResponse(result);
+    }
+
+    public static String convertMapToJson(Map<String, Object> map) {
+        Gson gson = new Gson();
+        return gson.toJson(map);
+    }
+
+    public static String buildQueryParams(Map<String, String> params) {
+        StringBuilder queryParams = new StringBuilder();
+
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            try {
+                String key = URLEncoder.encode(entry.getKey(), "UTF-8");
+                String value = URLEncoder.encode(entry.getValue(), "UTF-8");
+
+                if (queryParams.length() > 0) {
+                    queryParams.append("&");
+                }
+
+                queryParams.append(key)
+                        .append("=")
+                        .append(value);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace(); // Handle the exception according to your needs
+            }
+        }
+
+        return queryParams.toString();
     }
 
     public String readInputStream(InputStream ins) throws IOException {
