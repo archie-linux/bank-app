@@ -49,16 +49,123 @@
         android:padding= "5sp" />
 
     <TextView
+        android:id="@+id/keywordsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Keywords"
+        android:layout_below="@id/availableBalanceTextView"
+        android:textSize="18sp"/>
+
+    <EditText
+        android:id="@+id/keywordsEditText"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_below="@id/keywordsLabel"
+        android:autoSizePresetSizes="100dp"
+        />
+
+    <TextView
+        android:id="@+id/datesLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dates"
+        android:layout_below="@id/keywordsEditText"
+        android:textSize="18sp"/>
+
+    <EditText
+        android:id="@+id/fromDateEditText"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/datesLabel"
+        android:layout_weight="1"
+        android:autoSizePresetSizes="100dp"
+        android:text="yyyy/mm/dd" />
+
+    <EditText
+        android:id="@+id/toDateEditText"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/keywordsLabel"
+        android:layout_alignBaseline="@+id/fromDateEditText"
+        android:layout_marginLeft="80dp"
+        android:layout_toEndOf="@+id/fromDateEditText"
+        android:layout_weight="1"
+        android:autoSizePresetSizes="100dp"
+        android:text="yyyy/mm/dd" />
+
+    <TextView
+        android:id="@+id/amountLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Amount"
+        android:layout_below="@id/fromDateEditText"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/dollarFromLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$"
+        android:layout_below="@id/amountLabel"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"/>
+
+    <EditText
+        android:id="@+id/minAmountEditText"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/amountLabel"
+        android:layout_weight="1"
+        android:autoSizePresetSizes="100dp"
+        android:layout_toEndOf="@id/dollarFromLabel"
+        android:text="Min" />
+
+    <TextView
+        android:id="@+id/dollarToLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$"
+        android:layout_below="@id/amountLabel"
+        android:layout_toEndOf="@+id/minAmountEditText"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"/>
+
+
+    <EditText
+        android:id="@+id/maxAmountEditText"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/keywordsLabel"
+        android:layout_alignBaseline="@+id/minAmountEditText"
+        android:layout_toEndOf="@+id/dollarToLabel"
+        android:layout_weight="1"
+        android:autoSizePresetSizes="100dp"
+        android:text="Max" />
+
+    <Button
+        android:id="@+id/filterButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/minAmountEditText"
+        android:text="Filter"
+        android:textAlignment="textEnd"
+        />
+
+    <TextView
         android:id="@+id/recentTransactionsTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/availableBalanceTextView"
+        android:layout_below="@id/filterButton"
         android:text="Recent Transactions"
+        android:layout_alignParentStart="true"
         android:textSize="15sp"
         android:textStyle="bold"
         android:textAlignment="viewStart"
         android:padding= "7sp" />
-
 
     <!-- ListView below TextView -->
     <ListView
@@ -69,7 +176,5 @@
         android:divider="@android:color/darker_gray"
         android:dividerHeight="1dp"
         />
-
-
 
 </RelativeLayout>

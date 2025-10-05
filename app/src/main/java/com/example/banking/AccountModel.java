@@ -1,6 +1,10 @@
 package com.example.banking;
 
-public class AccountModel {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class AccountModel implements Serializable {
     private String accountType;
     private String accountBalance;
 
@@ -21,6 +25,14 @@ public class AccountModel {
 
     public String getAccountBalance() {
         return accountBalance;
+    }
+
+    public static List<String> getAccountTypes(ArrayList<AccountModel> accounts) {
+        List<String> accountTypes = new ArrayList<>();
+        for (AccountModel account: accounts) {
+            accountTypes.add(account.getAccountType());
+        }
+        return accountTypes;
     }
 }
 

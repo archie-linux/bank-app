@@ -4,15 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class AccountActivity extends AppCompatActivity {
@@ -27,8 +27,9 @@ public class AccountActivity extends AppCompatActivity {
         String  customerName = intent.getStringExtra("customerName");
 
         final TextView displayCustomerName = findViewById(R.id.displayCustomerNameTextView);
-        displayCustomerName.setText("Hello, " + customerName);
+        displayCustomerName.setText("Hello, " + customerName.split(" ")[0]);
 
+        final Button transferButton = findViewById(R.id.transferButton);
 
         APIClient client = new APIClient();
         JsonNode data = null;
@@ -38,7 +39,7 @@ public class AccountActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-        List<AccountModel> accounts = new ArrayList<>();
+        ArrayList<AccountModel> accounts = new ArrayList<>();
 
         for (JsonNode dataNode: data) {
             String accountType = dataNode.get("account_type").asText();
@@ -58,5 +59,15 @@ public class AccountActivity extends AppCompatActivity {
         ListView listView;
         listView = (ListView) findViewById(R.id.accountsListView);
         listView.setAdapter(adapter);
+
+        transferButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AccountActivity.this, TransferActivity.class);
+                intent.putExtra("accounts", accounts);
+                startActivity(intent);
+            }
+        });
+
     }
 }

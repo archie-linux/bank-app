@@ -15,7 +15,7 @@ public class TransactionModel {
         this.transactionType = transactionType;
         this.transactionDesc = transactionDesc;
         this.timestamp = timestamp;
-        System.out.println(transactionType);
+
         if (transactionType.equals("debit")) {
             this.amount = "- " +  amount;
         } else {

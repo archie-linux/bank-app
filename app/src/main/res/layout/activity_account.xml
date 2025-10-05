@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="16dp">
 
     <!-- TextView at the top -->
     <TextView
         android:id="@+id/displayCustomerNameTextView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Header Text"
         android:textSize="20sp"
@@ -21,9 +21,15 @@
         android:layout_below="@id/displayCustomerNameTextView"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="1dp"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16dp"
+        />
 
-    </ListView>
-
+    <Button
+        android:id="@+id/transferButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="220dp"
+        android:layout_centerHorizontal="true"
+        android:text="Transfer Funds" />
 
 </RelativeLayout>

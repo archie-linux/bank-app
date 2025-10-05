@@ -45,8 +45,6 @@ public class AccountAdapter extends ArrayAdapter<AccountModel> {
                 // Handle button click
                 Context context = v.getContext();
 
-                System.out.println(position);
-
                 Intent intent = new Intent(context, TransactionActivity.class);
                 intent.putExtra("accountId", position + 1);
                 intent.putExtra("accountType", item.getAccountType());

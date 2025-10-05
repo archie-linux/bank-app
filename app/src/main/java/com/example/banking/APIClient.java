@@ -49,6 +49,7 @@ public class APIClient {
             urlConnection.setRequestMethod("POST");
             urlConnection.setRequestProperty("Content-Type", "application/json");
 
+            // Write the request body to the output stream
             urlConnection.setDoOutput(true);
             urlConnection.getOutputStream().write(postData.getBytes());
 
