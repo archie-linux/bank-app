@@ -12,7 +12,7 @@ import java.net.URL;
 
 public class APIClient {
 
-    private static final String API_SERVER = "http://192.168.0.3:5001";
+    private static final String API_SERVER = "http://<FLASK_SERVER_IP_ADDRESS>:<PORT>";
     HttpURLConnection urlConnection = null;
     private String requestMethod;
     private String result;

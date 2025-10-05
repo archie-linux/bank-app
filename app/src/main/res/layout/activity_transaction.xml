@@ -22,17 +22,15 @@
         android:text="Header Text"
         android:textSize="15sp"
         android:textColor="#A9A9A9"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/accountBalanceTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/accountNumberTextView"
+        android:layout_alignBaseline="@id/accountTypeTextView"
         android:text="Header Text"
-        android:textAlignment="center"
+        android:textAlignment="textEnd"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -41,11 +39,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/accountBalanceTextView"
-        android:text="Available balance"
         android:textColor="#A9A9A9"
-        android:textAlignment="center"
+        android:textAlignment="textEnd"
         android:textSize="10sp"
         android:textStyle="bold"
+        android:text="Available balance"
         android:padding= "5sp" />
 
     <TextView
@@ -53,52 +51,60 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Keywords"
+        android:layout_marginTop="20dp"
         android:layout_below="@id/availableBalanceTextView"
-        android:textSize="18sp"/>
+        android:textSize="15sp"/>
 
     <EditText
         android:id="@+id/keywordsEditText"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_weight="1"
-        android:layout_below="@id/keywordsLabel"
-        android:autoSizePresetSizes="100dp"
+        android:layout_toEndOf="@id/keywordsLabel"
+        android:layout_alignBaseline="@id/keywordsLabel"
+        android:autoSizePresetSizes="80dp"
         />
 
     <TextView
         android:id="@+id/datesLabel"
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Dates"
         android:layout_below="@id/keywordsEditText"
-        android:textSize="18sp"/>
+        android:textSize="15sp"/>
 
     <EditText
         android:id="@+id/fromDateEditText"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/datesLabel"
+        android:layout_height="45dp"
+        android:layout_alignBaseline="@id/datesLabel"
+        android:layout_toEndOf="@id/datesLabel"
         android:layout_weight="1"
+        android:layout_marginLeft="10dp"
         android:autoSizePresetSizes="100dp"
-        android:text="yyyy/mm/dd" />
+        android:textSize="15dp"
+        android:text="y/m/d" />
 
     <EditText
         android:id="@+id/toDateEditText"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_below="@id/keywordsLabel"
         android:layout_alignBaseline="@+id/fromDateEditText"
-        android:layout_marginLeft="80dp"
+        android:layout_marginLeft="50dp"
         android:layout_toEndOf="@+id/fromDateEditText"
         android:layout_weight="1"
         android:autoSizePresetSizes="100dp"
-        android:text="yyyy/mm/dd" />
+        android:textSize="15dp"
+        android:text="y/m/d" />
 
     <TextView
         android:id="@+id/amountLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Amount"
+        android:layout_marginTop="20dp"
         android:layout_below="@id/fromDateEditText"
         android:textSize="18sp"/>
 
@@ -107,18 +113,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="$"
-        android:layout_below="@id/amountLabel"
+        android:layout_alignBaseline="@id/amountLabel"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="70dp"
         android:textSize="18sp"/>
 
     <EditText
         android:id="@+id/minAmountEditText"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/amountLabel"
+        android:layout_alignBaseline="@id/amountLabel"
         android:layout_weight="1"
         android:autoSizePresetSizes="100dp"
+        android:layout_marginLeft="5dp"
         android:layout_toEndOf="@id/dollarFromLabel"
         android:text="Min" />
 
@@ -127,9 +135,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="$"
-        android:layout_below="@id/amountLabel"
+        android:layout_alignBaseline="@id/amountLabel"
         android:layout_toEndOf="@+id/minAmountEditText"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:textSize="18sp"/>
@@ -142,6 +150,7 @@
         android:layout_below="@id/keywordsLabel"
         android:layout_alignBaseline="@+id/minAmountEditText"
         android:layout_toEndOf="@+id/dollarToLabel"
+        android:layout_marginLeft="2dp"
         android:layout_weight="1"
         android:autoSizePresetSizes="100dp"
         android:text="Max" />
@@ -149,7 +158,7 @@
     <Button
         android:id="@+id/filterButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_below="@id/minAmountEditText"
         android:text="Filter"
         android:textAlignment="textEnd"
