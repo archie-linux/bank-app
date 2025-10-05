@@ -6,7 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,8 +30,9 @@ public class TransactionActivity extends AppCompatActivity {
     private EditText maxAmountEditText;
 
     Integer accountId;
-
     RecyclerView recyclerView;
+    private int pastVisibleItems, visibleItemCount, totalItemCount;
+    private int currentPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +91,44 @@ public class TransactionActivity extends AppCompatActivity {
                 adapter.updateData(filteredTransactions);
             }
         });
+
+        // Add the scroll listener
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                        super.onScrolled(recyclerView, dx, dy);
+
+                        visibleItemCount = layoutManager.getChildCount();
+                        totalItemCount = layoutManager.getItemCount();
+                        pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
+
+                        if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
+                                // End of the list is reached
+                                // Load more data
+                                // You can replace this with your own logic to load more data
+                                currentPage++;
+                                isLoading = true;
+                                JsonNode data = getFilteredTransactions();
+
+                                if (!data.isEmpty()) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            List<TransactionModel> newData=  updateTransactionModel(data);
+                                            System.out.println("New Data: " + newData);
+                                            adapter.updateData(newData);
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                });
+            }}).start();
+
     }
 
     private JsonNode getFilteredTransactions() {
@@ -108,6 +149,9 @@ public class TransactionActivity extends AppCompatActivity {
             filterParams.put("min_date", fromDate);
             filterParams.put("max_date", toDate);
             filterParams.put("keyword", keyword);
+            if (currentPage != 1) {
+             filterParams.put("page", Integer.toString(currentPage));
+            }
 
             String filterParamsQueryString = client.buildQueryParams(filterParams);
 
