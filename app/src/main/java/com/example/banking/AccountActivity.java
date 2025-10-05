@@ -31,7 +31,7 @@ public class AccountActivity extends AppCompatActivity {
 
         final Button transferButton = findViewById(R.id.transferButton);
 
-        APIClient client = new APIClient();
+        APIClient client = new APIClient(getApplicationContext());
         JsonNode data = null;
         try {
             data = client.executeGetRequest("/customer/" + customerId + "/accounts");

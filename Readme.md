@@ -7,7 +7,7 @@
 
 3. In APIClient.java, replace API_SERVER with your flask server's ip address and port.
    
-   e.g `http://<ip>:<port>`
+   e.g `https://<ip>:<port>`
 
    Note: Assign the private IP address instead of 127.0.0.1 as a workaround if Android Studio blocks
          traffic on localhost.

@@ -4,13 +4,15 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
+    <include layout="@layout/activity_base" />
+
     <!-- TextView at the top -->
     <TextView
         android:id="@+id/accountTypeTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Header Text"
-        android:textColor="#A9A9A9"
+        android:layout_marginTop="80dp"
         android:textSize="15sp"
         android:textStyle="bold" />
 
@@ -21,7 +23,7 @@
         android:layout_below="@id/accountTypeTextView"
         android:text="Header Text"
         android:textSize="15sp"
-        android:textColor="#A9A9A9"
+        android:paddingTop="10sp"
         android:textStyle="bold" />
 
     <TextView
@@ -32,6 +34,7 @@
         android:text="Header Text"
         android:textAlignment="textEnd"
         android:textSize="20sp"
+        android:paddingRight="7sp"
         android:textStyle="bold" />
 
     <TextView
@@ -39,12 +42,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/accountBalanceTextView"
-        android:textColor="#A9A9A9"
         android:textAlignment="textEnd"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:textStyle="bold"
         android:text="Available balance"
-        android:padding= "5sp" />
+        android:paddingTop="10sp" />
 
     <TextView
         android:id="@+id/keywordsLabel"

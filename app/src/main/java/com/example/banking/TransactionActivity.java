@@ -38,8 +38,8 @@ public class TransactionActivity extends AppCompatActivity {
         final TextView accountBalanceTextView = findViewById(R.id.accountBalanceTextView);
         final Button filterTransactionsButton = findViewById(R.id.filterButton);
 
-        accountTypeTextView.setText("Account Type: " + accountType);
-        accountNumberTextView.setText("Account Number: " + accountNumber);
+        accountTypeTextView.setText(accountType);
+        accountNumberTextView.setText("Acc. No - " + accountNumber);
         accountBalanceTextView.setText(accountBalance);
 
         final EditText keywordsEditText = findViewById(R.id.keywordsEditText);
@@ -48,7 +48,7 @@ public class TransactionActivity extends AppCompatActivity {
         final EditText minAmountEditText = findViewById(R.id.minAmountEditText);
         final EditText maxAmountEditText = findViewById(R.id.maxAmountEditText);
 
-        APIClient client = new APIClient();
+        APIClient client = new APIClient(getApplicationContext());
         JsonNode data = null;
         try {
             data = client.executeGetRequest("/account/" + accountId + "/transactions");
@@ -74,7 +74,7 @@ public class TransactionActivity extends AppCompatActivity {
                 String minAmount = minAmountEditText.getText().toString();
                 String maxAmount = maxAmountEditText.getText().toString();
 
-                APIClient client = new APIClient();
+                APIClient client = new APIClient(getApplicationContext());
                 JsonNode data = null;
                 try {
                     data = client.executeGetRequest(

@@ -4,11 +4,14 @@
     android:layout_height="wrap_content"
     android:padding="16dp">
 
+    <include layout="@layout/activity_base" />
+
     <!-- TextView at the top -->
     <TextView
         android:id="@+id/displayCustomerNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
         android:text="Header Text"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -28,7 +31,7 @@
         android:id="@+id/transferButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="300dp"
         android:layout_centerHorizontal="true"
         android:text="Transfer Funds" />
 

@@ -61,7 +61,7 @@ public class TransferActivity extends AppCompatActivity {
 
                         try {
 
-                            APIClient client = new APIClient();
+                            APIClient client = new APIClient(getApplicationContext());
                             data = client.executePostRequest("/transfer", postData);
                         } catch (JsonProcessingException e) {
                             throw new RuntimeException(e);

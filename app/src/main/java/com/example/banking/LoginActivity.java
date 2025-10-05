@@ -1,6 +1,7 @@
 package com.example.banking;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
                         String username = editUsernameText.getText().toString();
                         String password = editPasswordText.getText().toString();
 
-                        APIClient client = new APIClient();
+                        APIClient client = new APIClient(getApplicationContext());
                         String postData = "{\n    \"username\": \"" + username + "\",\n    \"password\": \"" + password + "\"\n}";
                         JsonNode data = null;
                         try {
