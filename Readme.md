@@ -29,6 +29,10 @@ Screenshots
 
 <img src="./screenshots/transactions.png" alt="drawing" width="300"/>
 
+### Paginated View
+
+<img src="./screenshots/paginated_view.png" alt="drawing" width="300" />
+
 ### Filter By Date
 
 <img src="./screenshots/filter_by_date.png" alt="drawing" width="300"/>

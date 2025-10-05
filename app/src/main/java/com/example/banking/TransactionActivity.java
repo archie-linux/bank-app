@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,7 +57,9 @@ public class TransactionActivity extends AppCompatActivity {
         final TextView accountNumberTextView = findViewById(R.id.accountNumberTextView);
         final TextView accountBalanceTextView = findViewById(R.id.accountBalanceTextView);
         final Button filterTransactionsButton = findViewById(R.id.filterButton);
-        final Button allTransactionsButton = findViewById(R.id.allTransactionsButton);
+        final Button prevPageButton = findViewById(R.id.prevPageButton);
+        final Button nextPageButton = findViewById(R.id.nextPageButton);
+
 
         accountTypeTextView.setText(accountType);
         accountNumberTextView.setText("Acc. No - " + accountNumber);
@@ -87,6 +90,7 @@ public class TransactionActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+                currentPage = 1;
                 JsonNode data = getFilteredTransactions();
                 List<TransactionModel> filteredTransactions = null;
                 filteredTransactions = updateTransactionModel(data);
@@ -94,58 +98,40 @@ public class TransactionActivity extends AppCompatActivity {
             }
         });
 
-        allTransactionsButton.setOnClickListener(new View.OnClickListener() {
+        prevPageButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                currentPage = 0;
-                JsonNode data = getFilteredTransactions();
-                List<TransactionModel> filteredTransactions = null;
-                filteredTransactions = updateTransactionModel(data);
-                adapter.updateData(filteredTransactions);
+                currentPage--;
+                if (currentPage > 0) {
+                    JsonNode data = getFilteredTransactions();
+                    List<TransactionModel> filteredTransactions = null;
+                    filteredTransactions = updateTransactionModel(data);
+                    adapter.updateData(filteredTransactions);
+                } else {
+                    currentPage = 1;
+                    Toast.makeText(TransactionActivity.this, "Reached the first page", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-        // Add the scroll listener
+        nextPageButton.setOnClickListener(new View.OnClickListener() {
 
-        new Thread(new Runnable() {
             @Override
-            public void run() {
-                recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                    @Override
-                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                        super.onScrolled(recyclerView, dx, dy);
-
-                        visibleItemCount = layoutManager.getChildCount();
-                        totalItemCount = layoutManager.getItemCount();
-                        pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
-
-                        if (!isLastPage) {
-                            if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
-                                // End of the list is reached
-                                // Load more data
-                                // You can replace this with your own logic to load more data
-                                currentPage++;
-                                JsonNode data = getFilteredTransactions();
-
-                                if (!data.isEmpty()) {
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            List<TransactionModel> newData=  updateTransactionModel(data);
-                                            System.out.println("New Data: " + newData);
-                                            adapter.updateData(newData);
-                                        }
-                                    });
-                                }
-                            }
-                        } else {
-                            isLastPage = true;
-                        }
-                    }
-                });
-            }}).start();
-
+            public void onClick(View view) {
+                currentPage++;
+                JsonNode data = getFilteredTransactions();
+                if (!data.isEmpty()) {
+                    List<TransactionModel> filteredTransactions = null;
+                    filteredTransactions = updateTransactionModel(data);
+                    adapter.updateData(filteredTransactions);
+                } else {
+                    Toast.makeText(TransactionActivity.this, "No more data", Toast.LENGTH_SHORT).show();
+                    // Go back to the first page
+                    currentPage = 0;
+                }
+            }
+        });
     }
 
     private JsonNode getFilteredTransactions() {

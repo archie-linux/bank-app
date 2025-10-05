@@ -129,6 +129,7 @@
         android:layout_weight="1"
         android:autoSizePresetSizes="100dp"
         android:layout_marginLeft="5dp"
+        android:layout_marginBottom="10dp"
         android:layout_toEndOf="@id/dollarFromLabel"
         android:text="Min" />
 
@@ -166,15 +167,6 @@
         android:textAlignment="textEnd"
         />
 
-    <Button
-        android:id="@+id/allTransactionsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignBaseline="@id/filterButton"
-        android:layout_alignParentEnd="true"
-        android:text="View All Transactions"
-        android:textAlignment="textEnd" />
-
     <TextView
         android:id="@+id/recentTransactionsTextView"
         android:layout_width="match_parent"
@@ -185,6 +177,7 @@
         android:textSize="15sp"
         android:textStyle="bold"
         android:textAlignment="viewStart"
+        android:layout_marginTop="10dp"
         android:padding= "7sp" />
 
     <!-- RecyclerView below TextView -->
@@ -197,5 +190,30 @@
         android:clipToPadding="false"
         android:scrollbars="vertical"
         />
+
+
+    <Button
+        android:id="@+id/prevPageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_above="@id/accountTransactionsRecyclerView"
+        android:text="Prev"
+        android:layout_alignBaseline="@id/filterButton"
+        android:layout_below="@id/minAmountEditText"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@id/nextPageButton"
+        android:textAlignment="textEnd" />
+
+    <Button
+        android:id="@+id/nextPageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_above="@id/accountTransactionsRecyclerView"
+        android:layout_alignBaseline="@id/filterButton"
+        android:layout_below="@id/minAmountEditText"
+        android:layout_alignParentRight="true"
+        android:text="Next"
+        android:textAlignment="textEnd" />
+
 
 </RelativeLayout>
