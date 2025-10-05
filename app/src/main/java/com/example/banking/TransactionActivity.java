@@ -57,7 +57,7 @@ public class TransactionActivity extends AppCompatActivity {
 
         final TextView accountTypeTextView = findViewById(R.id.accountTypeTextView);
         final TextView accountNumberTextView = findViewById(R.id.accountNumberTextView);
-        final TextView accountBalanceTextView = findViewById(R.id.accountBalanceTextView);
+        final TextView availableBalanceTextView = findViewById(R.id.availableBalanceTextView);
         final Button filterTransactionsButton = findViewById(R.id.filterButton);
         final Button prevPageButton = findViewById(R.id.prevPageButton);
         final Button nextPageButton = findViewById(R.id.nextPageButton);
@@ -65,7 +65,7 @@ public class TransactionActivity extends AppCompatActivity {
 
         accountTypeTextView.setText(accountType);
         accountNumberTextView.setText("Acc. No - " + accountNumber);
-        accountBalanceTextView.setText(accountBalance);
+        availableBalanceTextView.setText("$" + accountBalance);
 
         APIClient client = new APIClient(getApplicationContext());
         JsonNode data = null;

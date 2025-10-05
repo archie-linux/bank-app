@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TransferActivity extends AppCompatActivity {
-
+    Integer customerId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +28,7 @@ public class TransferActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         ArrayList<AccountModel> accounts = (ArrayList<AccountModel>) intent.getSerializableExtra("accounts");
-
+        customerId = intent.getIntExtra("customerId", 0);
 
         final EditText toAccountEditText = findViewById(R.id.toAccountEditText);
         final TextView amountEditText = findViewById(R.id.amountEditText);
@@ -57,7 +57,6 @@ public class TransferActivity extends AppCompatActivity {
                         String fromAccountNumber = accounts.get(selectedIndex).getAccountNumber();
                         String toAccountNumber = toAccountEditText.getText().toString();
                         String amount = amountEditText.getText().toString();
-
                         JsonNode data = null;
 
                         try {
@@ -87,5 +86,23 @@ public class TransferActivity extends AppCompatActivity {
                 }).start();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        APIClient client = new APIClient(getApplicationContext());
+        JsonNode data = null;
+        try {
+            data = client.executeGetRequest("/customer/" + customerId + "/accounts");
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        ArrayList<AccountModel> accounts = AccountActivity.updateAccountModel(data);
+
+        AccountActivity.adapter.clear();
+        AccountActivity.adapter.addAll(accounts);
     }
 }

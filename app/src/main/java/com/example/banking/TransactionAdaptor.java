@@ -56,7 +56,7 @@ public class TransactionAdaptor extends RecyclerView.Adapter<TransactionAdaptor.
         holder.timestamp.setText(data.getTimestamp());
         holder.desc.setText(data.getTransactionDesc());
         holder.amount.setText(data.getAmount());
-        holder.currentBalance.setText(data.getCurrentBalance());
+        holder.currentBalance.setText("$" +  data.getCurrentBalance());
     }
 
     @Override

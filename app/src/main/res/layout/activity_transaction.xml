@@ -9,7 +9,7 @@
     <!-- TextView at the top -->
     <TextView
         android:id="@+id/accountTypeTextView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Header Text"
         android:layout_marginTop="80dp"
@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/accountNumberTextView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/accountTypeTextView"
         android:text="Header Text"
@@ -27,21 +27,22 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/accountBalanceTextView"
-        android:layout_width="match_parent"
+        android:id="@+id/availableBalanceTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/accountTypeTextView"
-        android:text="Header Text"
+        android:layout_alignParentRight="true"
         android:textAlignment="textEnd"
         android:textSize="20sp"
         android:paddingRight="7sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/availableBalanceTextView"
-        android:layout_width="match_parent"
+        android:id="@+id/availableBalanceLabel"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/accountBalanceTextView"
+        android:layout_below="@id/availableBalanceTextView"
+        android:layout_alignParentRight="true"
         android:textAlignment="textEnd"
         android:textSize="12sp"
         android:textStyle="bold"
@@ -54,7 +55,7 @@
         android:layout_height="wrap_content"
         android:text="Keywords"
         android:layout_marginTop="20dp"
-        android:layout_below="@id/availableBalanceTextView"
+        android:layout_below="@id/availableBalanceLabel"
         android:textSize="15sp"/>
 
     <EditText

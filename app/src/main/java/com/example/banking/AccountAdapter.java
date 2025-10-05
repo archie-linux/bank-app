@@ -12,10 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccountAdapter extends ArrayAdapter<AccountModel> {
-//    private JsonNode accountsInfo;
     public AccountAdapter(Context context, List<AccountModel> accounts) {
         super(context, 0, accounts);
     }
@@ -34,7 +34,7 @@ public class AccountAdapter extends ArrayAdapter<AccountModel> {
         accountTypeTextView.setText(item.getAccountType());
 
         TextView accountBalanceTextView = convertView.findViewById(R.id.accountBalanceTextView);
-        accountBalanceTextView.setText(item.getAccountBalance().toString());
+        accountBalanceTextView.setText("$" + item.getAccountBalance().toString());
 
         Button viewAccountTransactionsButton = convertView.findViewById(R.id.viewAccountTransactionsButton);
         viewAccountTransactionsButton.setOnClickListener(new View.OnClickListener() {
