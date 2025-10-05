@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
-import java.util.Collections;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;

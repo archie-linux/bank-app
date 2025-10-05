@@ -30,14 +30,12 @@ public class AccountAdapter extends ArrayAdapter<AccountModel> {
         // Get the data for this position
         AccountModel item = getItem(position);
 
-        // Set the subheading text
         TextView accountTypeTextView = convertView.findViewById(R.id.accountTypeTextView);
         accountTypeTextView.setText(item.getAccountType());
 
         TextView accountBalanceTextView = convertView.findViewById(R.id.accountBalanceTextView);
         accountBalanceTextView.setText(item.getAccountBalance().toString());
 
-//         Set the button click listener
         Button viewAccountTransactionsButton = convertView.findViewById(R.id.viewAccountTransactionsButton);
         viewAccountTransactionsButton.setOnClickListener(new View.OnClickListener() {
             @Override

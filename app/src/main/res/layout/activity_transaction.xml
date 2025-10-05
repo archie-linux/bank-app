@@ -178,14 +178,15 @@
         android:textAlignment="viewStart"
         android:padding= "7sp" />
 
-    <!-- ListView below TextView -->
-    <ListView
-        android:id="@+id/accountTransactionsListView"
+    <!-- RecyclerView below TextView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/accountTransactionsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/recentTransactionsTextView"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical"
         />
 
 </RelativeLayout>

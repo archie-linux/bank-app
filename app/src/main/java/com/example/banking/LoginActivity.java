@@ -40,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
                         final EditText editUsernameText = findViewById(R.id.editUsernameText);
                         final EditText editPasswordText = findViewById(R.id.editPasswordText);
 
-                        // Simulate the login logic; replace this with your actual login API request
                         String username = editUsernameText.getText().toString();
                         String password = editPasswordText.getText().toString();
 

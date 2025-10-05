@@ -3,13 +3,13 @@ package com.example.banking;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -21,13 +21,29 @@ import java.util.Map;
 
 public class TransactionActivity extends AppCompatActivity {
 
+    private EditText keywordsEditText;
+    private EditText fromDateEditText ;
+    private EditText toDateEditText;
+    private EditText minAmountEditText;
+    private EditText maxAmountEditText;
+
+    Integer accountId;
+
+    RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
 
         Intent intent = getIntent();
-        Integer accountId = intent.getIntExtra("accountId", 0);
+        accountId = intent.getIntExtra("accountId", 0);
+        keywordsEditText = findViewById(R.id.keywordsEditText);
+        fromDateEditText = findViewById(R.id.fromDateEditText);
+        toDateEditText = findViewById(R.id.toDateEditText);
+        minAmountEditText = findViewById(R.id.minAmountEditText);
+        maxAmountEditText = findViewById(R.id.maxAmountEditText);
+
         String accountType = intent.getStringExtra("accountType");
         String accountNumber = intent.getStringExtra("accountNumber");
         String accountBalance = intent.getStringExtra("accountBalance");
@@ -41,12 +57,6 @@ public class TransactionActivity extends AppCompatActivity {
         accountNumberTextView.setText("Acc. No - " + accountNumber);
         accountBalanceTextView.setText(accountBalance);
 
-        final EditText keywordsEditText = findViewById(R.id.keywordsEditText);
-        final EditText fromDateEditText = findViewById(R.id.fromDateEditText);
-        final EditText toDateEditText = findViewById(R.id.toDateEditText);
-        final EditText minAmountEditText = findViewById(R.id.minAmountEditText);
-        final EditText maxAmountEditText = findViewById(R.id.maxAmountEditText);
-
         APIClient client = new APIClient(getApplicationContext());
         JsonNode data = null;
         try {
@@ -58,49 +68,57 @@ public class TransactionActivity extends AppCompatActivity {
         List<TransactionModel> transactions = null;
         transactions = updateTransactionModel(data);
 
-        ArrayAdapter adapter = new TransactionAdaptor(this, transactions);
 
-        ListView listView;
-        listView = (ListView) findViewById(R.id.accountTransactionsListView);
-        listView.setAdapter(adapter);
+        // Set the layout manager to the RecyclerView
+        recyclerView = findViewById(R.id.accountTransactionsRecyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        // Set view adapter
+        TransactionAdaptor adapter = new TransactionAdaptor(this, transactions);
+        recyclerView.setAdapter(adapter);
 
         filterTransactionsButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                String keyword = keywordsEditText.getText().toString();
-                String fromDate = fromDateEditText.getText().toString();
-                String toDate = toDateEditText.getText().toString();
-                String minAmount = minAmountEditText.getText().toString();
-                String maxAmount = maxAmountEditText.getText().toString();
-
-                APIClient client = new APIClient(getApplicationContext());
-
-                JsonNode data = null;
-                try {
-
-                    Map<String, String> filterParams = new HashMap<>();
-                    filterParams.put("min_amount", minAmount);
-                    filterParams.put("max_amount", maxAmount);
-                    filterParams.put("min_date", fromDate);
-                    filterParams.put("max_date", toDate);
-                    filterParams.put("keyword", keyword);
-
-                    String filterParamsQueryString = client.buildQueryParams(filterParams);
-
-                    data = client.executeGetRequest(
-                            "/account/" + accountId + "/transactions?"
-                                        + filterParamsQueryString
-                                    );
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
-                }
-
+                JsonNode data = getFilteredTransactions();
                 List<TransactionModel> filteredTransactions = null;
                 filteredTransactions = updateTransactionModel(data);
-                updateAdapterWithFilteredTransactions(adapter, filteredTransactions);
+                adapter.updateData(filteredTransactions);
             }
         });
+    }
+
+    private JsonNode getFilteredTransactions() {
+        String keyword = keywordsEditText.getText().toString();
+        String fromDate = fromDateEditText.getText().toString();
+        String toDate = toDateEditText.getText().toString();
+        String minAmount = minAmountEditText.getText().toString();
+        String maxAmount = maxAmountEditText.getText().toString();
+
+        APIClient client = new APIClient(getApplicationContext());
+
+        JsonNode data = null;
+        try {
+
+            Map<String, String> filterParams = new HashMap<>();
+            filterParams.put("min_amount", minAmount);
+            filterParams.put("max_amount", maxAmount);
+            filterParams.put("min_date", fromDate);
+            filterParams.put("max_date", toDate);
+            filterParams.put("keyword", keyword);
+
+            String filterParamsQueryString = client.buildQueryParams(filterParams);
+
+            data = client.executeGetRequest(
+                    "/account/" + accountId + "/transactions?"
+                            + filterParamsQueryString
+            );
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return data;
     }
 
     private List<TransactionModel> updateTransactionModel(JsonNode data) {
@@ -127,16 +145,5 @@ public class TransactionActivity extends AppCompatActivity {
             ));
         }
         return transactions;
-    }
-
-    private void updateAdapterWithFilteredTransactions(ArrayAdapter adapter, List<TransactionModel> filteredTransactions) {
-        // Clear the existing data in the adapter
-        adapter.clear();
-
-        // Add the new filtered data to the adapter
-        adapter.addAll(filteredTransactions);
-
-        // Notify the adapter that the data has changed
-        adapter.notifyDataSetChanged();
     }
 }

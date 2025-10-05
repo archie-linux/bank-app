@@ -1,47 +1,72 @@
 package com.example.banking;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class TransactionAdaptor extends ArrayAdapter<TransactionModel> {
+public class TransactionAdaptor extends RecyclerView.Adapter<TransactionAdaptor.ViewHolder> {
+    private List<TransactionModel> transactions;
+    private Context context;
+
     public TransactionAdaptor(Context context, List<TransactionModel> transactions) {
-        super(context, 0, transactions);
+        this.context = context;
+        this.transactions = transactions;
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView timestamp;
+        TextView desc;
+        TextView amount;
+        TextView currentBalance;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            // Initialize views
+            timestamp = itemView.findViewById(R.id.transactionTimestampTextView);
+            desc = itemView.findViewById(R.id.transactionDescriptionTextView);
+            amount = itemView.findViewById(R.id.transactionAmountTextView);
+            currentBalance = itemView.findViewById(R.id.accountCurrentBalanceTextView);
+        }
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_transactions_layout, parent, false);
-        }
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Create a new view
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_transactions_layout, parent, false);
+        return new ViewHolder(view);
+    }
 
-        // Get the data for this position
-        TransactionModel item = getItem(position);
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // Set item height
+        ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
+        layoutParams.height = 150;
+        holder.itemView.setLayoutParams(layoutParams);
 
-        // Recent transactions
-        TextView transactionTimestampTextView = convertView.findViewById(R.id.transactionTimestampTextView);
-        transactionTimestampTextView.setText(item.getTimestamp());
+        // Update transaction items
+        TransactionModel data = transactions.get(position);
+        holder.timestamp.setText(data.getTimestamp());
+        holder.desc.setText(data.getTransactionDesc());
+        holder.amount.setText(data.getAmount());
+        holder.currentBalance.setText(data.getCurrentBalance());
+    }
 
-        TextView transactionDescriptionTextView = convertView.findViewById(R.id.transactionDescriptionTextView);
-        transactionDescriptionTextView.setText(item.getTransactionDesc());
+    @Override
+    public int getItemCount() {
+        return transactions.size();
+    }
 
-        TextView transactionAmountTextView = convertView.findViewById(R.id.transactionAmountTextView);
-        transactionAmountTextView.setText(item.getAmount());
-
-        TextView accountCurrentBalanceTextView = convertView.findViewById(R.id.accountCurrentBalanceTextView);
-        accountCurrentBalanceTextView.setText(item.getCurrentBalance());
-
-        return convertView;
+    public void updateData(List<TransactionModel> newData) {
+        transactions.clear();
+        transactions.addAll(newData);
+        notifyDataSetChanged();
     }
 }
