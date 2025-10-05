@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +33,8 @@ public class TransactionActivity extends AppCompatActivity {
     private int pastVisibleItems, visibleItemCount, totalItemCount;
     private int currentPage = 1;
 
+    private Boolean isLastPage = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,7 @@ public class TransactionActivity extends AppCompatActivity {
         final TextView accountNumberTextView = findViewById(R.id.accountNumberTextView);
         final TextView accountBalanceTextView = findViewById(R.id.accountBalanceTextView);
         final Button filterTransactionsButton = findViewById(R.id.filterButton);
+        final Button allTransactionsButton = findViewById(R.id.allTransactionsButton);
 
         accountTypeTextView.setText(accountType);
         accountNumberTextView.setText("Acc. No - " + accountNumber);
@@ -92,6 +94,18 @@ public class TransactionActivity extends AppCompatActivity {
             }
         });
 
+        allTransactionsButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                currentPage = 0;
+                JsonNode data = getFilteredTransactions();
+                List<TransactionModel> filteredTransactions = null;
+                filteredTransactions = updateTransactionModel(data);
+                adapter.updateData(filteredTransactions);
+            }
+        });
+
         // Add the scroll listener
 
         new Thread(new Runnable() {
@@ -106,12 +120,12 @@ public class TransactionActivity extends AppCompatActivity {
                         totalItemCount = layoutManager.getItemCount();
                         pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
 
-                        if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
+                        if (!isLastPage) {
+                            if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
                                 // End of the list is reached
                                 // Load more data
                                 // You can replace this with your own logic to load more data
                                 currentPage++;
-                                isLoading = true;
                                 JsonNode data = getFilteredTransactions();
 
                                 if (!data.isEmpty()) {
@@ -125,7 +139,10 @@ public class TransactionActivity extends AppCompatActivity {
                                     });
                                 }
                             }
+                        } else {
+                            isLastPage = true;
                         }
+                    }
                 });
             }}).start();
 
@@ -149,9 +166,7 @@ public class TransactionActivity extends AppCompatActivity {
             filterParams.put("min_date", fromDate);
             filterParams.put("max_date", toDate);
             filterParams.put("keyword", keyword);
-            if (currentPage != 1) {
-             filterParams.put("page", Integer.toString(currentPage));
-            }
+            filterParams.put("page", Integer.toString(currentPage));
 
             String filterParamsQueryString = client.buildQueryParams(filterParams);
 

@@ -166,6 +166,15 @@
         android:textAlignment="textEnd"
         />
 
+    <Button
+        android:id="@+id/allTransactionsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignBaseline="@id/filterButton"
+        android:layout_alignParentEnd="true"
+        android:text="View All Transactions"
+        android:textAlignment="textEnd" />
+
     <TextView
         android:id="@+id/recentTransactionsTextView"
         android:layout_width="match_parent"
