@@ -37,7 +37,6 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.12.5")
     implementation("com.google.code.gson:gson:2.8.8")
-    implementation("androidx.paging:paging-runtime:3.0.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel:2.5.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
     testImplementation("junit:junit:4.13.2")

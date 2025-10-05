@@ -28,7 +28,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/editPasswordText"
+        android:layout_centerHorizontal="true"
         android:text="Login" />
 
+    <TextView
+        android:id="@+id/loginErrorMessageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loginButton"
+        android:textSize="20dp"
+        android:textColor="#FF0000"
+        android:layout_centerHorizontal="true"
+        />
 
 </RelativeLayout>

@@ -12,6 +12,7 @@ import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -31,7 +32,10 @@ public class LoginActivity extends AppCompatActivity {
 
         Button loginButton = findViewById(R.id.loginButton);
 
+        TextView loginErrorMessageTextView = findViewById(R.id.loginErrorMessageTextView);
+
         loginButton.setOnClickListener(new View.OnClickListener() {
+            JsonNode data = null;
             @Override
             public void onClick(View view) {
                 new Thread(new Runnable() {
@@ -54,26 +58,26 @@ public class LoginActivity extends AppCompatActivity {
                         // Print the JSON string
                         System.out.println("JSON String: " + loginPostData);
 
-                        JsonNode data = null;
                         try {
                             data = client.executePostRequest("/login", loginPostData);
                         } catch (JsonProcessingException e) {
                             throw new RuntimeException(e);
                         }
 
-                        Integer customerId = data.get("id").asInt();
-                        String customerName = data.get("name").asText();
+                        String errorMessage = data.get("error").asText();
 
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (customerId != 0) {
+                                if(errorMessage.isEmpty()) {
+                                    Integer customerId = data.get("id").asInt();
+                                    String customerName = data.get("name").asText();
                                     Intent intent = new Intent(LoginActivity.this, AccountActivity.class);
                                     intent.putExtra("customerId", customerId);
                                     intent.putExtra("customerName", customerName);
                                     startActivity(intent);
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "Invalid User", Toast.LENGTH_SHORT).show();
+                                    loginErrorMessageTextView.setText(errorMessage);
                                 }
                             }
                         });

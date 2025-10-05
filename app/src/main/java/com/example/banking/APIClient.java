@@ -22,7 +22,7 @@ import javax.net.ssl.SSLContext;
 
 public class APIClient {
 
-    private static final String API_SERVER = "https://<FLASK_SERVER_IP_ADDRESS>:<PORT>";
+    private static final String API_SERVER = "https://192.168.0.3:5001";
     HttpURLConnection urlConnection = null;
     private String requestMethod;
     private String result;
