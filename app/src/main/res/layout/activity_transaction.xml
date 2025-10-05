@@ -188,7 +188,6 @@
         android:layout_below="@id/recentTransactionsTextView"
         android:padding="8dp"
         android:clipToPadding="false"
-        android:scrollbars="vertical"
         />
 
 

@@ -32,8 +32,6 @@ public class LoginActivity extends AppCompatActivity {
 
         Button loginButton = findViewById(R.id.loginButton);
 
-        TextView loginErrorMessageTextView = findViewById(R.id.loginErrorMessageTextView);
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             JsonNode data = null;
             @Override
@@ -77,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                                     intent.putExtra("customerName", customerName);
                                     startActivity(intent);
                                 } else {
-                                    loginErrorMessageTextView.setText(errorMessage);
+                                    Toast.makeText(LoginActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

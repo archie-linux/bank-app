@@ -42,6 +42,7 @@ public class AccountActivity extends AppCompatActivity {
         ArrayList<AccountModel> accounts = new ArrayList<>();
 
         for (JsonNode dataNode: data) {
+            String accountId = dataNode.get("account_id").asText();
             String accountType = dataNode.get("account_type").asText();
             String accountNumber = dataNode.get("account_number").asText();
             String accountBalance = "$" + dataNode.get("account_balance").asText();
@@ -49,7 +50,9 @@ public class AccountActivity extends AppCompatActivity {
             String formattedAccountType = accountType.substring(0, 1).toUpperCase() + accountType.substring(1)
                     + " - " + accountNumber.substring(accountNumber.length() - 4).toString();
 
-            accounts.add(new AccountModel(formattedAccountType,
+            accounts.add(new AccountModel(
+                    accountId,
+                    formattedAccountType,
                     accountNumber,
                     accountBalance));
         }

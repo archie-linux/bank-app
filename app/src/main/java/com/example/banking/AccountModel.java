@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountModel implements Serializable {
+    private String accountId;
     private String accountType;
     private String accountBalance;
 
     private String accountNumber;
-    public AccountModel(String accountType, String accountNumber, String accountBalance) {
+    public AccountModel(String accountId, String accountType, String accountNumber, String accountBalance) {
+        this.accountId = accountId;
         this.accountType = accountType;
         this.accountNumber = accountNumber;
         this.accountBalance = accountBalance;
@@ -33,6 +35,10 @@ public class AccountModel implements Serializable {
             accountTypes.add(account.getAccountType());
         }
         return accountTypes;
+    }
+
+    public String getAccountId() {
+        return accountId;
     }
 }
 

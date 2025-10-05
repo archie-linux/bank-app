@@ -1,8 +1,10 @@
 package com.example.banking;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -29,11 +31,11 @@ public class TransactionActivity extends AppCompatActivity {
     private EditText minAmountEditText;
     private EditText maxAmountEditText;
 
-    Integer accountId;
     RecyclerView recyclerView;
     private int pastVisibleItems, visibleItemCount, totalItemCount;
     private int currentPage = 1;
 
+    String accountId;
     private Boolean isLastPage = false;
 
     @Override
@@ -42,13 +44,13 @@ public class TransactionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_transaction);
 
         Intent intent = getIntent();
-        accountId = intent.getIntExtra("accountId", 0);
         keywordsEditText = findViewById(R.id.keywordsEditText);
         fromDateEditText = findViewById(R.id.fromDateEditText);
         toDateEditText = findViewById(R.id.toDateEditText);
         minAmountEditText = findViewById(R.id.minAmountEditText);
         maxAmountEditText = findViewById(R.id.maxAmountEditText);
 
+        accountId = intent.getStringExtra("accountId");
         String accountType = intent.getStringExtra("accountType");
         String accountNumber = intent.getStringExtra("accountNumber");
         String accountBalance = intent.getStringExtra("accountBalance");

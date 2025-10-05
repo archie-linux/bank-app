@@ -44,7 +44,7 @@ public class AccountAdapter extends ArrayAdapter<AccountModel> {
                 Context context = v.getContext();
 
                 Intent intent = new Intent(context, TransactionActivity.class);
-                intent.putExtra("accountId", position + 1);
+                intent.putExtra("accountId", item.getAccountId());
                 intent.putExtra("accountType", item.getAccountType());
                 intent.putExtra("accountNumber", item.getAccountNumber());
                 intent.putExtra("accountBalance", item.getAccountBalance());
