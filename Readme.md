@@ -15,38 +15,3 @@
 4. Default test user accounts created: [username:sa-1, password:sa-1], [username:sa-2, password:sa-2]
 
 5. E2E Tests Repo: https://github.com/anpa6841/androidTests
-
-Screenshots
-
-### Login
-
-<img src="./screenshots/login.png" alt="drawing" width="300"/>
-
-### List Accounts
-
-<img src="./screenshots/accounts.png" alt="drawing" width="300"/>
-
-
-### List Transactions
-
-<img src="./screenshots/transactions.png" alt="drawing" width="300"/>
-
-### Paginated View
-
-<img src="./screenshots/paginated_view.png" alt="drawing" width="300" />
-
-### Filter By Date
-
-<img src="./screenshots/filter_by_date.png" alt="drawing" width="300"/>
-
-### Filter By Amount
-
-<img src="./screenshots/filter_by_amount.png" alt="drawing" width="300"/>
-
-### Filter By Keyword
-
-<img src="./screenshots/filter_by_keyword.png" alt="drawing" width="300"/>
-
-### Transfer Funds
-
-<img src="./screenshots/transfer.png" alt="drawing" width="300"/>
