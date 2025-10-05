@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Heading TextView -->
+    <TextView
+        android:id="@+id/transactionTimestampTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="8sp"
+        android:textColor="@android:color/darker_gray"
+        android:textStyle="bold"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"/>
+
+    <!-- Subheading TextView -->
+    <TextView
+        android:id="@+id/transactionDescriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:layout_below="@id/transactionTimestampTextView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="false"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"/>
+
+    <TextView
+        android:id="@+id/transactionAmountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="11dp"
+        android:textColor="@android:color/black"
+        android:layout_alignBaseline="@+id/transactionTimestampTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"/>
+
+    <TextView
+        android:id="@+id/accountCurrentBalanceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="8sp"
+        android:textColor="@android:color/black"
+        android:layout_alignBaseline="@+id/transactionDescriptionTextView"
+        android:layout_below="@+id/transactionAmountTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="8dp"/>
+
+
+</RelativeLayout>

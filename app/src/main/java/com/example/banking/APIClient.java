@@ -12,23 +12,19 @@ import java.net.URL;
 
 public class APIClient {
 
-    private static final String GRAPHQL_ENDPOINT = "http://192.168.0.3:9001/graphql";
-
+    private static final String API_SERVER = "http://192.168.0.3:5001";
+    HttpURLConnection urlConnection = null;
+    private String requestMethod;
     private String result;
 
-    public String executeGraphQLQuery(String query) {
-        HttpURLConnection urlConnection = null;
+    public APIClient() {};
 
+    public JsonNode executeGetRequest(String endpoint) throws JsonProcessingException {
         try {
-            URL url = null;
-            url = new URL(GRAPHQL_ENDPOINT);
-
+            URL url =  new URL(API_SERVER + endpoint);
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestMethod("GET");
             urlConnection.setRequestProperty("Content-Type", "application/json");
-
-            urlConnection.setDoOutput(true);
-            urlConnection.getOutputStream().write(query.getBytes());
 
             InputStream APIResponse = urlConnection.getInputStream();
             result = readInputStream(APIResponse);
@@ -42,7 +38,34 @@ public class APIClient {
                 urlConnection.disconnect();
             }
         }
-        return result;
+
+        return getAPIResponse(result);
+    }
+
+    public JsonNode executePostRequest(String endpoint, String postData) throws JsonProcessingException {
+        try {
+            URL url =  new URL(API_SERVER + endpoint);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestProperty("Content-Type", "application/json");
+
+            urlConnection.setDoOutput(true);
+            urlConnection.getOutputStream().write(postData.getBytes());
+
+            InputStream APIResponse = urlConnection.getInputStream();
+            result = readInputStream(APIResponse);
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        }
+        finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+        }
+
+        return getAPIResponse(result);
     }
 
     public String readInputStream(InputStream ins) throws IOException {
