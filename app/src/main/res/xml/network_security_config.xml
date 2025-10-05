@@ -3,7 +3,7 @@
     <base-config cleartextTrafficPermitted="true">
         <trust-anchors>
             <!-- Add your self-signed certificate here -->
-            <certificates src="@res/raw/cert.pem"/>
+            <certificates src="system"/>
         </trust-anchors>
     </base-config>
 </network-security-config>
